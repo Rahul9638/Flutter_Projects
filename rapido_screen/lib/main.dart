@@ -1,7 +1,12 @@
+import 'dart:io' show Platform;
+
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './widget/login_widget.dart';
-import './widget/splash_screen.dart';
+import 'screen/login_widget.dart';
+import 'screen/splash_screen.dart';
+import './screen/otp_screen_default.dart';
+import './screen/information_scree.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,10 +22,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: SplashScreen(),
-      debugShowCheckedModeBanner: false,
-    );
+    return Platform.isAndroid
+        ? MaterialApp(
+            title: 'Flutter Demo',
+            home: SplashScreen(),
+            routes: {
+              OtpScreen.routeName: (ctx) => OtpScreen(),
+              InformationScreen.routeName: (ctx) => InformationScreen(),
+            },
+          )
+        : CupertinoApp(
+            home: SplashScreen(),
+            routes: {
+              OtpScreen.routeName: (ctx) => OtpScreen(),
+              InformationScreen.routeName: (ctx) => InformationScreen(),
+            },
+          );
   }
 }
